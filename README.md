@@ -15,3 +15,7 @@ Exits with 1 otherwise.
 
 Recuresively prints contents of every `.kak` file in provided directory.
 Workaround for slow default autoloading mechanism in kakoune.
+
+## randfile
+
+Prints name of a random file (or files (`-n` flag)) in specified or current directory.
