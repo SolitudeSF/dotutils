@@ -1,19 +1,14 @@
-import libmpdclient, os, strutils
+import mpdclient, os, strutils
 
 const mpdLibrary {.strdefine.} = gorge "xdg-user-dir MUSIC"
 
-var
-  image = ""
-  mpd = mpdConnectionNew(nil, 0, 30000)
+var image = ""
 
-discard mpd.mpdSendCurrentSong
+let song = newMPDClient().currentSong
 
-let song = mpd.mpdRecvSong
+if song.isSome:
 
-if song != nil:
-  let
-    uri = song.mpdSongGetUri
-    folder = mpdLibrary / parentDir $uri
+  let folder = mpdLibrary / parentDir song.get.file
 
   for file in folder.walkDirRec:
     let
@@ -21,9 +16,8 @@ if song != nil:
       name = realName.toLowerAscii
       ext = realExt.toLowerAscii
     if ext == ".png" or ext == ".jpg" or ext == ".jpeg":
-      if image == "": image = file
-      elif name == "cover" or name == "folder":
+      if image.len == 0: image = file
+      elif name == "cover" or name == "folder" or name == "front":
         image = file
 
 echo image
-mpd.mpdConnectionFree
