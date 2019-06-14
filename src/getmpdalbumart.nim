@@ -19,5 +19,6 @@ if song.isSome:
       if image.len == 0: image = file
       elif name == "cover" or name == "folder" or name == "front":
         image = file
+        break
 
 echo image
