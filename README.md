@@ -6,9 +6,9 @@ Various utilities for small tasks, where shell languages are not enough.
 
 Tries to find an image file the supposed to be an album cover of a current mpd track.
 
-## isnimbleproject
+## getprojecticon
 
-Exits with 0 if it finds .nimble file in one of the parent dirs, up to a limit.
+Outputs corresponding icon if launched in the (child) directory of Nim/Rust/Python/Go project.
 Exits with 1 otherwise.
 
 ## randfile

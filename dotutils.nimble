@@ -1,11 +1,11 @@
 # Package
 
-version       = "0.1.3"
+version       = "0.1.4"
 author        = "SolitudeSF"
 description   = "Helper programs for my own workflow"
 license       = "MIT"
 srcDir        = "src"
-bin           = @["isnimbleproject", "getmpdalbumart", "randfile"]
+bin           = @["getprojecticon", "getmpdalbumart", "randfile"]
 
 
 # Dependencies
