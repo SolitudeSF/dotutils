@@ -1,8 +1,9 @@
 import os, osproc, strutils
 
 proc setWallpapers(files: openArray[string]): int =
-  var args = @["-z"]
+  var args: seq[string]
   for n, path in files:
+    args.add "-z"
     args.add "--on"
     args.add $n
     args.add path
