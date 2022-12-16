@@ -35,13 +35,18 @@ proc wlp =
         n = paramStr(i * 2 - 1).parseInt
         path = paramStr(i * 2)
 
+      if n > files.high: files.setLen n + 1
+
       files[n] = if path.isAbsolute: path else: getCurrentDir() / path
 
     let file = open(wallPath, fmWrite)
 
+    let code = setWallpapers files
+
+    if code != 0:
+      quit code
+
     for path in files:
       file.writeLine path
-
-    quit setWallpapers files
 
 wlp()
