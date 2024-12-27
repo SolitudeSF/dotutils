@@ -1,24 +1,24 @@
-import mpdclient, os, strutils
+import std/[os, strutils]
+import pkg/mpdclient
 
 const mpdLibrary {.strdefine.} = gorge "xdg-user-dir MUSIC"
 
-var image = ""
+proc getImage(libraryPath: string): string =
+  let song = newMPDClient().currentSong
 
-let song = newMPDClient().currentSong
+  if song.isSome:
 
-if song.isSome:
+    let folder = libraryPath / parentDir song.get.file
 
-  let folder = mpdLibrary / parentDir song.get.file
+    for file in folder.walkDirRec(yieldFilter = {pcFile, pcLinkToFile}):
+      let
+        (_, realName, realExt) = file.splitFile
+        name = realName.toLowerAscii
+        ext = realExt.toLowerAscii
+      if ext == ".png" or ext == ".jpg" or ext == ".jpeg" or ext == ".jxl":
+        if result.len == 0: result = file
+        elif name == "cover" or name == "folder" or name == "front":
+          result = file
+          break
 
-  for file in folder.walkDirRec:
-    let
-      (_, realName, realExt) = file.splitFile
-      name = realName.toLowerAscii
-      ext = realExt.toLowerAscii
-    if ext == ".png" or ext == ".jpg" or ext == ".jpeg":
-      if image.len == 0: image = file
-      elif name == "cover" or name == "folder" or name == "front":
-        image = file
-        break
-
-echo image
+echo getImage mpdLibrary

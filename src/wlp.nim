@@ -1,4 +1,4 @@
-import os, osproc, strutils
+import std/[os, osproc, strutils]
 
 proc setWallpapers(files: openArray[string]): int =
   var args: seq[string]

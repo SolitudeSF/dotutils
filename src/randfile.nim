@@ -1,4 +1,4 @@
-import os, random, strutils
+import std/[os, random, strutils]
 
 var
   files: seq[string]
