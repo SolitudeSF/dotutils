@@ -5,7 +5,7 @@ author        = "SolitudeSF"
 description   = "Helper programs for my own workflow"
 license       = "MIT"
 srcDir        = "src"
-bin           = @["getprojecticon", "getmpdalbumart", "randfile", "wlp", "chext", "fsfree", "gamescope_args", "cnvrt"]
+bin           = @["getprojecticon", "getmpdalbumart", "randfile", "wlp", "chext", "fsfree", "gamescope_args", "cnvrt", "xwinlayout", "dircount", "clipmon"]
 
 
 # Dependencies

@@ -1,9 +1,7 @@
-getmpdalbumart
-getprojecticon
-wlp
-randfile
-chext
-fsfree
-gamescope_args
-cnvrt
+/*
+!.gitignore
+!README.md
+!LICENSE
+!src/
+!src/*
 !*.nim*

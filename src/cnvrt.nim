@@ -73,7 +73,7 @@ proc jxl(files: seq[string], `no-icc` = false, effort: 1..9 = 9) {.dependsOn: ["
     for file in files:
       doAssert file.fileExists
       let tmp = genTempPath("cnvrt-", file.splitFile.ext)
-      exiftool "-icc_profile:all=", file, "-o", tmp
+      exiftool "-qq", "-icc_profile:all=", file, "-o", tmp
       vips "jxlsave", "-e", effort, tmp, file.changeFileExt "jxl"
       removeFile tmp
   else:

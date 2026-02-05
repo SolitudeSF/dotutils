@@ -2,13 +2,11 @@ import std/[os, osproc, strutils]
 
 proc setWallpapers(files: openArray[string]): int =
   var args: seq[string]
-  for n, path in files:
-    args.add "-z"
-    args.add "--on"
-    args.add $n
+  for _, path in files:
+    args.add "-cover"
     args.add path
 
-  let process = startProcess(findExe "setroot", args = args, options = {poParentStreams})
+  let process = startProcess(findExe "hsetroot", args = args, options = {poParentStreams})
 
   result = waitForExit process
 
