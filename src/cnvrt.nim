@@ -66,20 +66,24 @@ proc chd(files: seq[string], `type` = cd) {.dependsOn: "chdman".} =
     doAssert file.fileExists
     chdman commands[`type`], "-i", file, "-o", file.changeFileExt "chd"
 
-proc jxl(files: seq[string], `no-icc` = false, effort: 1..9 = 9) {.dependsOn: ["vips", "exiftool"].} =
+proc jxl(files: seq[string], `no-icc` = false, effort: 1..9 = 9) {.dependsOn: ["vips"].} =
   ## Convert image to jxl
   let effort = $effort
   if `no-icc`:
     for file in files:
       doAssert file.fileExists
-      let tmp = genTempPath("cnvrt-", file.splitFile.ext)
-      exiftool "-qq", "-icc_profile:all=", file, "-o", tmp
-      vips "jxlsave", "-e", effort, tmp, file.changeFileExt "jxl"
-      removeFile tmp
+      vips "jxlsave", "-e", effort, "--keep", "--keep exif:xmp:iptc:other:gainmap", file, file.changeFileExt "jxl"
   else:
     for file in files:
       doAssert file.fileExists
       vips "jxlsave", "-e", effort, file, file.changeFileExt "jxl"
+
+proc bps(files: seq[string], baserom: string) {.dependsOn: "flips".} =
+  let tmpfile = getTempDir() / "cnvrt " & baserom.splitFile.ext
+  for file in files:
+    flips "--apply", file, baserom, tmpfile
+    flips "--create", "--bps", baserom, tmpfile, file.changeFileExt "bps"
+    removeFile tmpfile
 
 proc opus(files: seq[string], bitrate = 256) {.dependsOn: "opusenc".} =
   ## Convert audio file to opus
@@ -97,5 +101,6 @@ dispatchMulti(
   [jxl],
   [dwarfs],
   [zpaq],
+  [bps],
   [opus]
 )
